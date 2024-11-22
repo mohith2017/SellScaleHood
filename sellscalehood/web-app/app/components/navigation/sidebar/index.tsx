@@ -33,18 +33,18 @@ const Sidebar = ({
 
         <ul className="sidebar-nav text-center leading-relaxed text-xl">
           <li>
-            <Link href="/about" onClick={toggle}>
-              <p>About Us</p>
+            <Link href="/search" onClick={toggle}>
+              <p>Query</p>
             </Link>
           </li>
           <li>
-            <Link href="/services" onClick={toggle}>
-              <p>Services</p>
+            <Link href="/buyorsell" onClick={toggle}>
+              <p>Buy/Sell</p>
             </Link>
           </li>
           <li>
-            <Link href="/contacts" onClick={toggle}>
-              <p>Contacts</p>
+            <Link href="/portfolio" onClick={toggle}>
+              <p>View Portfolio</p>
             </Link>
           </li>
         </ul>
