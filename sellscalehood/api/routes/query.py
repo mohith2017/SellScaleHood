@@ -4,7 +4,7 @@ from utils.data_processing import convert_timestamps, replace_nan
 
 bp = Blueprint('query', __name__)
 
-@bp.route('/query', methods=['GET'])
+@bp.route('/api/v1/query', methods=['GET'])
 def queryTicker():
     tickerName = request.args.get('tickerName', default='', type=str)
     ticker = yf.Ticker(tickerName)

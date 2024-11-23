@@ -21,7 +21,7 @@ const Buyorsell = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const endpoint = action === 'buy' ? '/api/buyStock' : '/api/sellStock';
+      const endpoint = action === 'buy' ? '/api/v1/stocks/buy' : '/api/v1/stocks/sell';
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
