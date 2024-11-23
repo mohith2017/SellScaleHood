@@ -2,7 +2,7 @@ import React from "react";
 import QueryTab from "../components/querytab/QueryTab";
 
 const Search = () => {
-  return <QueryTab ticker="MSFT"></QueryTab>;
+  return <QueryTab />;
 };
 
 export default Search;
