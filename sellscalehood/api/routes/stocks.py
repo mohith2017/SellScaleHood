@@ -105,7 +105,7 @@ def sell_stock():
                     doc_ref.update({
                         "quantity": new_quantity,
                         "price_per_share": current_price,
-                        "total_value": current_price * new_quantity,  # Update total value based on remaining shares
+                        "total_value": current_price * new_quantity,  
                         "status": "success"
                     })
                 else:

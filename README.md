@@ -6,6 +6,205 @@ At SellScale, we’re here to redefine how businesses grow revenue. We're buildi
 ## App
 We are going to be building a simple version of Robinhood (web client). This is going to require setting up a basic backend server, frontend application, and some sort of data storage (database or file storage are both acceptable).
 
+
+## Prerequisites
+
+- Python 3.x
+- Node.js (14.x or later)
+- npm (Node Package Manager)
+- A code editor (e.g., Visual Studio Code)
+
+## Setup Instructions
+### 1. Setting Up the Flask API
+
+1. **Navigate to the API directory:**
+
+```bash
+   cd api
+```
+
+2. **Create a virtual environment (optional but recommended):**
+
+```bash
+python -m venv venv
+```
+
+3. **Activate the virtual environment:**
+- On Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+- On macOS/Linux:
+```bash
+source venv/bin/activate
+```
+
+4. **Install the required Python packages:**
+```bash
+pip install -r requirements.txt
+```
+
+5. **Run the Flask application:**
+```bash
+flask run 
+```
+
+- The API should now be running on http://localhost:5000.
+
+
+### 2. Setting Up the Next.js Frontend
+1. **Open a new terminal and navigate to the app directory:**
+```bash
+cd app
+```
+
+2. **Install the required Node.js packages:**
+```bash
+npm install
+```
+
+3. **Run the Next.js application:**
+```bash
+npm run dev
+```
+
+The frontend should now be running on http://localhost:3000.
+
+
+### 3. Testing the Application
+- Open your web browser and navigate to http://localhost:3000 to view the Portfolio Management app.
+- Ensure that your Flask API is running concurrently on http://127.0.0.1:5000 so that the frontend can make requests to it.
+
+**API Endpoints**
+The following endpoints are available in the Flask API:
+1. GET /api/v1/stocks
+- Description: Fetches all stock data for the portfolio.
+- Response:
+```bash
+200 OK: Returns a list of stocks in the portfolio.
+json
+[
+  {
+    "ticker": "AAPL",
+    "quantity": 10,
+    "price_per_share": 150.00,
+    "total_cost": 1500.00,
+    "status": "success"
+  },
+  ...
+]
+```
+
+- Error Responses:
+500 Internal Server Error: If there is an error retrieving stock data.
+
+2. POST /api/v1/stocks/buy
+- Description: Buys a specified quantity of a stock and updates the portfolio.
+```bash
+Request Body:
+json
+{
+  "tickerName": "AAPL",
+  "quantity": 10
+}
+```
+
+
+- Response:
+```bash
+200 OK: Returns the transaction details.
+json
+{
+  "ticker": "AAPL",
+  "quantity": 10,
+  "price_per_share": 150.00,
+  "total_cost": 1500.00,
+  "status": "success"
+}
+```
+
+- Error Responses:
+400 Bad Request: If the ticker name is invalid or quantity is less than or equal to zero.
+json
+{
+  "error": "Invalid ticker or quantity"
+}
+
+- 500 Internal Server Error: If there is an error processing the transaction.
+
+
+3. POST /api/v1/stocks/sell
+- Description: Sells a specified quantity of a stock and updates the portfolio.
+- Request Body:
+```bash
+{
+  "tickerName": "AAPL",
+  "quantity": 5
+}
+```
+
+- Response:
+```bash
+200 OK: Returns the transaction details.
+json
+{
+  "ticker": "AAPL",
+  "quantity": 5,
+  "price_per_share": 150.00,
+  "total_value": 750.00,
+  "status": "success"
+}
+```
+
+- Error Responses:
+400 Bad Request: If the ticker name is invalid, quantity is less than or equal to zero, or if there are insufficient stocks to sell.
+```bash
+{
+  "error": "Insufficient stocks to sell"
+}
+```
+```bash
+404 Not Found: If the stock is not found in the portfolio.
+json
+{
+  "error": "Stock not found in portfolio"
+}
+```
+
+- 500 Internal Server Error: If there is an error processing the transaction.
+
+4. GET /api/v1/query
+- Description: Retrieves detailed information about a specific stock ticker.
+- Query Parameters:
+tickerName: The stock ticker symbol (e.g., AAPL).
+
+- Response:
+```bash
+200 OK: Returns detailed information about the stock.
+json
+{
+  "info": { ... },
+  "calendar": { ... },
+  "analyst_price_targets": { ... },
+  "quarterly_income_stmt": { ... },
+  "history": [
+    { ... },
+    ...
+  ]
+}
+```
+
+5. GET /api/v1
+- Description: A simple welcome endpoint for the API.
+- Response:
+
+```bash
+200 OK: Returns a welcome message.
+Welcome to SellScale API routes!
+```
+
 **The app is expected to be able to do three things:**
 
 1. “Query” for specific stock tickers (i.e. search for $AAPL, $TSLA). Powered by [yfinance](https://pypi.org/project/yfinance/) library
@@ -29,20 +228,3 @@ Use these resources as starting points when working on this challenge! Also, fee
 - Create React App: https://create-react-app.dev/
 - Dribble UI Inspiration: https://dribbble.com/search/robinhood-app
 - Typescript Documentation: https://www.typescriptlang.org/docs/
-
-## Checklist
-Here are the things we will be looking for, explicitly, when reviewing your deliverable. Be sure to mention how all of these are addressed in your Loom video.
-
-**User Checklist**
-
-- [ ]  Can I search up / look up a stock? Show me how.
-- [ ]  Can I ‘buy’ a stock? How?
-- [ ]  Can I ‘sell’ a stock? How?
-- [ ]  Can I see where the stocks I purchase show up? What does the portfolio look like?
-
-**Technical Checklist**
-
-- [ ]  Is the frontend built with React / Javascript?
-- [ ]  Is the backend built with Python / (Flask or Django)?
-- [ ]  Does the backend implementation leverage the ‘YFinance’ API?
-- [ ]  Does the UI resemble a stock trading app that a user would typically use?

@@ -1,9 +1,9 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 type StockData = {
   ticker: string;   
@@ -16,7 +16,7 @@ type StockData = {
 const Portfolio = () => {
   const [stockData, setStockData] = useState<Array<StockData> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchStocks = async () => {
@@ -64,37 +64,40 @@ const Portfolio = () => {
             <CardTitle className="text-2xl font-bold text-center">Your Portfolio</CardTitle>
           </CardHeader>
           <CardContent>
-            {/* Grand Total Display */}
-            <div className="text-center mb-4">
-              <h2 className="text-xl font-bold">Total Invested</h2>
-              <p className="text-2xl text-green-500">${grandTotal.toFixed(2)}</p>
-              <p className="text-sm text-gray-600">
-                {uniqueTickers} Companies | {totalStocks} Shares
-              </p>
-            </div>
+            {/* Flex Container for Statistics and Pie Chart */}
+            <div className="flex items-center justify-between mb-4">
+              {/* Grand Total Display */}
+              <div className="text-center w-1/2">
+                <h2 className="text-xl font-bold">Total Invested</h2>
+                <p className="text-2xl text-green-500">${grandTotal.toFixed(2)}</p>
+                <p className="text-sm text-gray-600">
+                  {uniqueTickers} Companies | {totalStocks} Shares
+                </p>
+              </div>
 
-            {/* Pie Chart */}
-            <div className="flex justify-center mb-4">
-            <PieChart width={400} height={400}>
-              <Pie
-                data={pieChartData}
-                cx={200}
-                cy={200}
-                labelLine={false}
-                label={({ name }) => name}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {pieChartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                formatter={(value: number, name: string) => [`${value.toFixed(2)}`, name]} 
-                labelFormatter={(name) => `Ticker: ${name}`} 
-              />
-            </PieChart>
+              {/* Pie Chart */}
+              <div className="flex justify-center w-1/2">
+                <PieChart width={400} height={400}>
+                  <Pie
+                    data={pieChartData}
+                    cx={200}
+                    cy={200}
+                    labelLine={false}
+                    label={({ name }) => name}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {pieChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    formatter={(value: number, name: string) => [`${value.toFixed(2)}`, name]} 
+                    labelFormatter={(name) => `Ticker: ${name}`} 
+                  />
+                </PieChart>
+              </div>
             </div>
 
             {/* Stock Table */}

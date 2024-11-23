@@ -1,6 +1,10 @@
 import firebase_admin
 import os
 from firebase_admin import firestore, credentials
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class Firebase: 
     def __init__(self):
