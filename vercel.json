@@ -1,25 +1,6 @@
 {
-    "buildCommand": "cd app && npm run build",
-    "outputDirectory": "web-app/.next",
-    "framework": "nextjs",
-    "builds": [
-      {
-        "src": "api/main.py",
-        "use": "@vercel/python"
-      },
-      {
-        "src": "app/package.json",
-        "use": "@vercel/next"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "api/main.py"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "app/$1"
-      }
-    ]
-  }
+  "projects": [
+    { "name": "fastapi-backend", "path": "api" },
+    { "name": "nextjs-frontend", "path": "web-app" }
+  ]
+}
