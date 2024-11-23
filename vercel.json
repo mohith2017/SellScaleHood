@@ -1,6 +1,0 @@
-{
-  "projects": [
-    { "name": "fastapi-backend", "path": "api" },
-    { "name": "nextjs-frontend", "path": "web-app" }
-  ]
-}
