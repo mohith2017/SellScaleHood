@@ -10,10 +10,8 @@ db = firebase.config()
 @bp.route('/api/v1/stocks/buy', methods=['POST'])
 def post_buy_stock():
     data = request.json
-    tickerName = data.get('tickerName', '')
+    tickerName = data.get('tickerName', '').upper()
     quantity = data.get('quantity', 0)
-    print(tickerName)
-    print(quantity)
     
     if not tickerName or quantity <= 0:
         return jsonify({"error": "Invalid ticker or quantity"}), 400
@@ -33,7 +31,19 @@ def post_buy_stock():
 
         try:
             doc_ref = db.collection("Stocks").document(tickerName)
-            doc_ref.set({"quantity": quantity, "price_per_share": current_price, "total_cost": total_cost, "status": "success"}, merge=True)
+            doc = doc_ref.get()
+            if doc.exists:
+                current_quantity = doc.to_dict().get('quantity', 0)
+                new_quantity = current_quantity + quantity
+                print(new_quantity)
+                doc_ref.update({
+                    "quantity": new_quantity,
+                    "price_per_share": current_price,
+                    "total_cost": current_price * new_quantity,  
+                    "status": "success"
+                })
+            else:
+                doc_ref.set({"quantity": quantity, "price_per_share": current_price, "total_cost": total_cost, "status": "success"}, merge=True)
 
         except Exception as e:
             print(f"Error registering stock data: {str(e)}")
@@ -76,7 +86,7 @@ def get_all_stocks():
 @bp.route('/api/v1/stocks/sell', methods=['POST'])
 def sell_stock():
     data = request.json
-    tickerName = data.get('tickerName', '')
+    tickerName = data.get('tickerName', '').upper()
     quantity = data.get('quantity', 0)
     
     if not tickerName or quantity <= 0:

@@ -6,6 +6,11 @@ At SellScale, we’re here to redefine how businesses grow revenue. We're buildi
 ## App
 We are going to be building a simple version of Robinhood (web client). This is going to require setting up a basic backend server, frontend application, and some sort of data storage (database or file storage are both acceptable).
 
+## Tech Stack
+- React/Next.js Frontend with Typescript
+- Flask API Python SDK Backend
+- ShadCN UI
+- Firestore Database (Firebase)
 
 ## Prerequisites
 
@@ -14,12 +19,24 @@ We are going to be building a simple version of Robinhood (web client). This is 
 - npm (Node Package Manager)
 - A code editor (e.g., Visual Studio Code)
 
+## Initial steps 
+
+1. Unzip the SellScaleHood-master zip file
+For macOS users
+```bash
+   unzip filename.zip
+```
+Or simply, double click on your zip file to extract
+
+
 ## Setup Instructions
 ### 1. Setting Up the Flask API
 
 1. **Navigate to the API directory:**
 
 ```bash
+   cd SellScaleHood-master
+   cd sellscalehood
    cd api
 ```
 
@@ -46,7 +63,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-5. **Run the Flask application:**
+5. **Setup the environment variables**
+```bash
+cat .env
+```
+Verify that the environment variables are set here. If this is empty, paste the contents for the API flask .env here [Provided in the zip]
+
+6. **Run the Flask application:**
 ```bash
 flask run 
 ```
@@ -57,7 +80,10 @@ flask run
 ### 2. Setting Up the Next.js Frontend
 1. **Open a new terminal and navigate to the app directory:**
 ```bash
-cd app
+   cd SellScaleHood-master
+   cd sellscalehood
+   cd web-app
+   cd src
 ```
 
 2. **Install the required Node.js packages:**
@@ -65,7 +91,13 @@ cd app
 npm install
 ```
 
-3. **Run the Next.js application:**
+3. **Setup the environment variables**
+```bash
+cat .env
+```
+Verify that the environment variables are set here. If this is empty, paste the contents for the Nextjs frontend .env here [Provided in the zip]
+
+4. **Run the Next.js application:**
 ```bash
 npm run dev
 ```
@@ -73,9 +105,17 @@ npm run dev
 The frontend should now be running on http://localhost:3000.
 
 
+
 ### 3. Testing the Application
 - Open your web browser and navigate to http://localhost:3000 to view the Portfolio Management app.
 - Ensure that your Flask API is running concurrently on http://127.0.0.1:5000 so that the frontend can make requests to it.
+
+**The app is expected to be able to do three things:**
+
+1. “Query” for specific stock tickers (i.e. search for $AAPL, $TSLA). Powered by [yfinance](https://pypi.org/project/yfinance/) library
+2. “Buy” and “Sell” specific stock tickers (i.e. enter ticker, quantity, and save the amount somewhere in a database)
+3. “View Portfolio” and see a list of all previously bought stock tickers.
+
 
 **API Endpoints**
 The following endpoints are available in the Flask API:
@@ -205,11 +245,7 @@ json
 Welcome to SellScale API routes!
 ```
 
-**The app is expected to be able to do three things:**
 
-1. “Query” for specific stock tickers (i.e. search for $AAPL, $TSLA). Powered by [yfinance](https://pypi.org/project/yfinance/) library
-2. “Buy” and “Sell” specific stock tickers (i.e. enter ticker, quantity, and save the amount somewhere in a database)
-3. “View Portfolio” and see a list of all previously bought stock tickers.
 
 **In order to build these, we are expecting three core pieces:**
 
